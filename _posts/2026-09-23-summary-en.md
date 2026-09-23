@@ -5,191 +5,212 @@ date: 2026-09-23
 lang: en
 ---
 
-> From 20 items, 9 important content pieces were selected
+> From 15 items, 10 important content pieces were selected
 
 ---
 
 **Technology News**
-1. [Claude Opus 5.5 and GPT-6 Sol/Luna launch with steep price cuts](#item-tech-news-1) ⭐️ 8.0/10
-2. [25 Fields Medalists Criticize OpenAI Over Credit for Math Results](#item-tech-news-2) ⭐️ 7.0/10
-3. [Qualcomm Unveils Snapdragon 8 Elite Extreme Gen 6 Platform](#item-tech-news-3) ⭐️ 7.0/10
-4. [Apple Reportedly Prototyping Screenless Whoop-Style Fitness Band](#item-tech-news-4) ⭐️ 6.0/10
-5. [ShinyHunters Claims FBI Breach, Employee and Applicant Data](#item-tech-news-5) ⭐️ 6.0/10
-6. [Microsoft cuts 268 more Xbox jobs, moves next Halo to Activision](#item-tech-news-6) ⭐️ 5.0/10
+1. [Jev: LLM-as-Judge Evaluation in 25 Lines of Python](#item-tech-news-1) ⭐️ 7.0/10
+2. [Technical memo explains Mixture of Experts fundamentals and modern load-balancing methods](#item-tech-news-2) ⭐️ 6.0/10
+3. [New M6 and M5 Pro Mac mini reportedly solder storage, ending third-party upgrades](#item-tech-news-3) ⭐️ 6.0/10
+4. [HBM Memory Die Value Per Area Surpasses Leading-Edge Logic Chips](#item-tech-news-4) ⭐️ 6.0/10
+5. [JCOM internet outage hits most of Japan](#item-tech-news-5) ⭐️ 5.0/10
+6. [Geta.Team: AI &\#x27;employees&\#x27; with dedicated email, phone numbers, and self-hosting](#item-tech-news-6) ⭐️ 5.0/10
+7. [ByteDance&\#x27;s Doubao Reportedly Halves General Conversation Team](#item-tech-news-7) ⭐️ 5.0/10
+8. [Musk Praises Chinese AI Models, Predicts Compute Gap Closure in 2-3 Years](#item-tech-news-8) ⭐️ 5.0/10
+
+**Technology Blog**
+1. [Four Copyright Risks of Generative AI, Grounded in Primary Sources](#item-tech-blog-1) ⭐️ 8.0/10
 
 **Financial News**
-1. [China Reportedly Tells Banks Not to Classify Vanke&\#x27;s Overdue Loans as Bad Debt](#item-finance-news-1) ⭐️ 8.0/10
-2. [CFTC Warns Prediction-Market &\#x27;Mentions&\#x27; Contracts Carry Higher Manipulation Risk](#item-finance-news-2) ⭐️ 7.0/10
-3. [Major U.S. CEOs to attend Trump-Xi dinner during Xi&\#x27;s U.S. visit](#item-finance-news-3) ⭐️ 6.0/10
+1. [China&\#x27;s Self-Sufficiency Shifts Trade Calculus Ahead of Trump-Xi Summit](#item-finance-news-1) ⭐️ 7.0/10
 
 ---
 
 ## Technology News
 
 <a id="item-tech-news-1"></a>
-### [Claude Opus 5.5 and GPT-6 Sol/Luna launch with steep price cuts](https://simonwillison.net/2026/Sep/22/opus-and-sol-and-luna/) ⭐️ 8.0/10
+### [Jev: LLM-as-Judge Evaluation in 25 Lines of Python](https://www.nobodywho.ai/posts/jev-in-25-lines/) ⭐️ 7.0/10
 
-Anthropic released Claude Opus 5.5 and OpenAI released GPT-6 Sol and GPT-6 Luna within an hour of each other, and Simon Willison&\#x27;s early impressions focus on an aggressive price war. GPT-6 Luna costs $0.10/M input and $0.50/M output—half the promotional price of GPT-5.6 Luna, which itself faces a scheduled 25% increase in November—while GPT-6 Sol dropped to $2/M input and $10/M output. Claude Opus 5.5 is priced at $4/M input and $20/M output, a 20% cut from the $5/$25 price shared by Opus 4.5 through 5.0, with cache reads down 60%, which matters for long agentic conversations. Willison also reports that Opus 5.5 at &\#x27;max&\#x27; thinking level twice exhausted its 128,000-token output limit while reasoning about his pelican SVG test, costing $2.56 per failed attempt, leading him to distrust the max setting.
+A blog post from nobodywho.ai demonstrates &quot;Jev,&quot; an LLM-as-judge evaluation technique implemented in roughly 25 lines of Python that classifies text by reading token logprobs for candidate answer labels rather than parsing generated output. The approach frames classification as a single forward pass, comparing the probabilities the model assigns to each option token. The post drew substantive technical discussion on Hacker News about the method&\#x27;s limitations and possible refinements, though it is a small practical hack rather than a validated evaluation framework.
 
-rss · Simon Willison · Sep 22, 23:46
+hackernews · bashbjorn · Sep 23, 07:26 · [Discussion](https://news.ycombinator.com/item?id=49812769)
 
-**「Background」** Anthropic&\#x27;s Claude Opus line and OpenAI&\#x27;s GPT family are competing frontier LLM offerings sold via per-token API pricing, where input, cached input, and output tokens are billed separately per million tokens. Simon Willison is a developer and blogger known for hands-on evaluations of new models, including his informal &\#x27;generate an SVG of a pelican riding a bicycle&\#x27; benchmark. These releases follow a rapid cadence of model launches, with xAI&\#x27;s Grok 4.7 and Xiaomi&\#x27;s MiMo v2.6 appearing just a day earlier.
+**「Background」** LLM-as-a-judge is a common evaluation pattern in which a language model classifies or scores outputs instead of relying on hand-written rules, and one lightweight variant reads the model&\#x27;s token logprobs for answer options \(such as &quot;yes&quot; vs &quot;no&quot;\) rather than parsing generated prose. Jev is a recent decision-only judging approach built on this idea: it classifies intent, scores severity, or ranks candidates while leaving generation and reasoning to a full LLM, and a recent arXiv study found such a judge within three percentage points of generative judges while offering a cheaper first pass that escalates low-confidence cases. The post demonstrates how to reproduce this technique in roughly 25 lines of Python.
 
-**「Impact」** Developers building on OpenAI&\#x27;s API can now use GPT-6 Luna at one-tenth the price of Claude Haiku 4.5 \($1/$5\), and GPT-6 Sol matches GPT-5.6 Terra&\#x27;s input price while undercutting its output price, removing reasons to stay on Terra. Anthropic says Sonnet 5.5 and Haiku 5.5 are coming soon, so teams choosing budget tiers may want to wait for those prices before committing.
+**「Community Discussion」** Commenters raised several caveats: sigmoid10 warned that chat models are trained to produce prose, so choice-token probabilities can be diluted unless the prompt is carefully constrained, while armcat argued logprob-based scoring has been unreliable on frontier models since GPT-4o and that simply asking the model for confidence correlates better. Antirez suggested concrete improvements, noting that because of causal attention masking, placing options before the input text lets the model build task-specific state, and that few-shot examples or repeating the question can improve calibration; alun separately criticized the post&\#x27;s &quot;System One&quot; framing as a misnomer for what is deliberate classification work.
 
-**Tags**: `#llm`, `#openai`, `#anthropic`, `#model-releases`, `#api-pricing`
+<details><summary>References</summary>
+<ul>
+<li><a href="https://dev.to/miruky/jev-does-not-replace-the-llm-it-changes-who-owns-the-decision-3n6">Jev Does Not Replace the LLM. It Changes Who Owns the ...</a></li>
+<li><a href="https://arxiv.org/abs/2609.26550">[2609.26550] JEV-as-a-Judge: Accept When Confident, Escalate ...</a></li>
+
+</ul>
+</details>
+
+**Tags**: `#llm-evaluation`, `#logprobs`, `#python`, `#prompt-engineering`, `#machine-learning`
 
 ---
 
 <a id="item-tech-news-2"></a>
-### [25 Fields Medalists Criticize OpenAI Over Credit for Math Results](https://www.nikkei.com/article/DGXZQOGN221FZ0S6A920C2000000/) ⭐️ 7.0/10
+### [Technical memo explains Mixture of Experts fundamentals and modern load-balancing methods](https://iwashi.co/2026/09/23/mixture-of-experts-moe-memo) ⭐️ 6.0/10
 
-Nikkei reports that 25 Fields Medal winners issued a statement on the 11th expressing concern about negative effects on academia from OpenAI&\#x27;s AI-driven work on difficult mathematical problems. Martin Hairer, a Fields medalist and professor at EPFL in Lausanne, signed the statement and criticized the company, saying that AI companies&\#x27; appropriation of research results hinders the sharing of knowledge among researchers. The full article is paywalled, so the statement&\#x27;s specific demands and OpenAI&\#x27;s response are not detailed in the available text.
+A Japanese technical memo by iwashi.co explains the fundamentals of Mixture of Experts \(MoE\) architecture used in recent open-weight LLMs such as DeepSeek-V4.1-Flash, Kimi K3, and MiMo-V2.6. It corrects the common &\#x27;domain expert&\#x27; intuition, clarifying that MoE is simply a sparsely activated architecture where the dense FFN layer of a Transformer block is replaced by router-selected experts, with different experts activated per token. The memo details routing design choices \(token choice, expert choice, global assignment\), the expert collapse problem documented in OLMoE ablations, and the auxiliary load balancing loss from Switch Transformer with a worked numerical example. It then compares modern aux-loss-free approaches: DeepSeek-V3&\#x27;s dynamic per-expert bias, Kimi K3&\#x27;s Quantile Balancing for its 896-expert top-16 configuration, and MiMo-V2.6&\#x27;s similar bias mechanism, noting that MiMo-V2.6&\#x27;s technical report describes routing collapse during reinforcement learning that was fixed by rolling back router parameters.
 
-rss · はてなブックマーク \(テクノロジー\) · Sep 23, 00:21
+rss · はてなブックマーク \(テクノロジー\) · Sep 23, 07:32
 
-**「Background」** The friction stems from OpenAI&\#x27;s recent claims that its internal AI models solved more than 100 open mathematics problems, including a disputed Navier-Stokes proof, which mathematicians said were rushed and improperly credited. On September 11, 2026, 25 Fields Medal winners signed a declaration accusing AI labs of a &quot;severe misalignment&quot; with mathematical research norms, following earlier incidents in which an NYU professor accused OpenAI of hampering attribution and Caltech withdrew OpenAI sponsorship. In response to the backlash, OpenAI formed a nine-person Advisory Group on Mathematics and Artificial Intelligence at Princeton&\#x27;s Institute for Advanced Study to referee its AI&\#x27;s math claims.
+**「Background」** Mixture of Experts \(MoE\) is a neural network architecture that replaces the dense feed-forward layers of a Transformer with multiple parallel &\#x27;expert&\#x27; subnetworks, activating only a small subset per token via a learned router. This lets models grow total parameter counts into the trillions while keeping per-token compute roughly constant, which is why most recent top-tier open-weight LLMs have adopted it. The technique builds on earlier work such as Switch Transformer, which introduced the auxiliary load-balancing loss that later designs like DeepSeek-V3&\#x27;s bias-based approach sought to replace.
 
-**「Impact」** The public criticism from a large group of Fields medalists signals that mathematicians working with or alongside AI tools may face disputes over attribution and credit, which could affect how AI-assisted results are published and recognized in the field.
+**「Impact」** For practitioners, the memo highlights two operationally relevant facts: MoE inference still requires GPU memory for the full parameter count \(making quantization essential on consumer hardware despite sparse activation\), and shared experts remain a contested design choice, with DeepSeek reporting clear gains while OLMoE found no significant difference and MiMo-V2.6 omits them entirely.
 
-<details><summary>References</summary>
-<ul>
-<li><a href="https://www.explainx.ai/blog/fields-medalists-ai-math-declaration-openai-2026">Fields Medalists vs OpenAI: The Math AI Declaration (2026 ...</a></li>
-<li><a href="https://startupfortune.com/openai-recruits-nine-mathematicians-to-referee-its-ais-math-claims/">OpenAI Recruits Nine Mathematicians to Referee Its AI&#x27;s Math ...</a></li>
-<li><a href="https://techtrendsnewsupdate.substack.com/p/mathematicians-say-openai-rushed">Mathematicians Say OpenAI Rushed to Claim Proofs — 25 Fields ...</a></li>
-
-</ul>
-</details>
-
-**Tags**: `#OpenAI`, `#AIと数学`, `#フィールズ賞`, `#研究倫理`, `#AI業界`
+**Tags**: `#mixture-of-experts`, `#llm-architecture`, `#deep-learning`, `#transformers`, `#technical-explainer`
 
 ---
 
 <a id="item-tech-news-3"></a>
-### [Qualcomm Unveils Snapdragon 8 Elite Extreme Gen 6 Platform](https://www.qualcomm.com/smartphones/products/8-series/snapdragon-8-elite-extreme-gen-6-mobile-platform) ⭐️ 7.0/10
+### [New M6 and M5 Pro Mac mini reportedly solder storage, ending third-party upgrades](https://9to5mac.com/2026/09/22/m6-mac-mini-upgrade-storage-change/) ⭐️ 6.0/10
 
-Qualcomm has announced the Snapdragon 8 Elite Extreme Gen 6 mobile platform, targeting smartphones built around agentic AI workloads. The chip features what Qualcomm calls the world&\#x27;s first 5 GHz phone CPU \(Oryon, claimed 13% faster\), an Adreno GPU with claimed 44% performance and 40% efficiency gains, a 35% faster Hexagon NPU, and the X105 5G modem with a 14.8 Gbps peak downlink. It also supports 8K60 and 4K240 video plus a claimed first triple 64-megapixel camera configuration. All performance figures are vendor claims; independent testing by Geekerwan on an engineering unit found efficiency improvements over the previous generation to be modest, well below those of the retail A20 Pro.
+Teardowns reported by 9to5Mac indicate that the new M6 and M5 Pro Mac mini have their NAND storage chips soldered to the logic board, removing the replaceable storage module design that the M4 Mac mini offered. Buyers must now choose their capacity at purchase, since third-party SSD modules can no longer be installed afterward. The cost gap is significant: Apple charges $500 to go from 256 GB to 1 TB and $1,000 for 2 TB on the M6 Mac mini, while third-party 1 TB and 2 TB modules for the M4 model cost roughly $300 and $420. These findings come from teardown reporting rather than an Apple statement, so they reflect a single source&\#x27;s examination of the hardware.
 
-telegram · zaihuapd · Sep 23, 00:52
+telegram · zaihuapd · Sep 23, 08:00
 
-**「Background」** The Snapdragon 8 Elite Extreme Gen 6 is the higher-tier variant of Qualcomm&\#x27;s annual flagship mobile SoC refresh, launched alongside the standard Snapdragon 8 Elite Gen 6. Both chips are built on a 2nm process and use Qualcomm&\#x27;s custom Oryon CPU in a configuration of two 5 GHz prime cores and six 4 GHz performance cores, continuing the shift away from Arm&\#x27;s stock Cortex designs that began with the original Snapdragon 8 Elite. The integrated X105 modem supports 5G Advanced with mmWave and sub-6GHz, up to 500MHz of downlink carrier aggregation bandwidth, and is hardware-ready for 3GPP Release 19 including satellite connectivity via NB-NTN and NR-NTN.
+**「Background」** Apple&\#x27;s M4 Mac mini, released in 2024, used a removable proprietary SSD module rather than storage soldered directly to the logic board, which allowed third-party vendors to sell cheaper upgrade modules after purchase. Soldered NAND has historically been Apple&\#x27;s approach on most Macs, forcing buyers to pay Apple&\#x27;s higher storage upgrade prices at the time of purchase.
 
-**「Impact」** Buyers and reviewers should treat the headline gains cautiously: Geekerwan&\#x27;s engineering-unit testing suggests real-world efficiency improvements may be far smaller than Qualcomm&\#x27;s marketing numbers imply, so retail-device benchmarks will be the deciding evidence.
+**「Impact」** Prospective Mac mini buyers who previously relied on cheaper third-party storage upgrades now face paying Apple&\#x27;s configuration prices upfront, which run roughly $200 to $580 higher per tier than the third-party modules the M4 model accepted. Users with uncertain future storage needs should factor the full upgrade cost into the initial purchase decision.
 
-<details><summary>References</summary>
-<ul>
-<li><a href="https://9to5google.com/2026/09/22/snapdragon-8-elite-gen-6/">Qualcomm announces the Snapdragon 8 Elite Gen 6 and 8 Elite Extreme Gen 6</a></li>
-<li><a href="https://hothardware.com/news/snapdragon-8-elite-extreme-gen-6-release">Snapdragon 8 Elite Extreme Gen 6 Hits 5GHz With Neural Fusion Gaming, Wi-Fi 8</a></li>
-
-</ul>
-</details>
-
-**Tags**: `#qualcomm`, `#snapdragon`, `#mobile-soc`, `#on-device-ai`, `#hardware`
+**Tags**: `#apple`, `#mac-mini`, `#hardware`, `#storage`, `#right-to-repair`
 
 ---
 
 <a id="item-tech-news-4"></a>
-### [Apple Reportedly Prototyping Screenless Whoop-Style Fitness Band](https://www.bloomberg.com/news/articles/2026-09-22/apple-is-developing-new-fitness-tracker-aimed-at-rivaling-whoop) ⭐️ 6.0/10
+### [HBM Memory Die Value Per Area Surpasses Leading-Edge Logic Chips](https://www.tomshardware.com/pc-components/dram/dram-is-now-more-expensive-than-compute-chips-on-per-area-basis-ai-demand-drives-memory-die-value-past-leading-edge-silicon) ⭐️ 6.0/10
 
-Apple is developing a screenless health and fitness tracker resembling Whoop&\#x27;s wristband, according to a Bloomberg report citing people familiar with the matter. The company has explored the concept for several months and begun building prototypes of a thin fabric band with embedded sensors. The project remains in early technical research with no decision to ship; if it proceeds, the earliest possible launch would be 2028, and the effort reportedly has backing from executives including Tim Cook.
+AI infrastructure demand for high-bandwidth memory \(HBM\) has pushed the per-unit-area value of memory dies above that of some leading-edge logic chips, according to a Tom&\#x27;s Hardware report. The shift is attributed to HBM&\#x27;s demanding stacking processes, advanced packaging, and stricter yield control, combined with rapidly growing AI accelerator requirements for memory bandwidth and capacity. This reverses the longstanding position of advanced-process logic chips as the highest-value products in the semiconductor industry, though the report does not provide specific pricing figures or name particular chips compared.
 
-telegram · zaihuapd · Sep 23, 00:01
+telegram · zaihuapd · Sep 23, 11:39
 
-**「Background」** Whoop popularized the screenless fitness band category: a sensor-laden strap worn around the wrist that tracks recovery, strain, and sleep, paired with a subscription app rather than a display. Apple&\#x27;s current wearable lineup centers on the Apple Watch, a screen-based device, so a fabric band would represent a new form factor for the company. Reports also frame the project as a response to Google&\#x27;s Fitbit Air, another screenless tracker in development.
+**「Why HBM costs more per area」** HBM stacks multiple DRAM dies vertically using through-silicon vias and advanced packaging, which consumes more silicon area per gigabyte than standard memory and tightens yield requirements. Micron warned at Hot Chips 2026 that this silicon penalty of HBM relative to DDR5 is widening with every generation, and Tom&\#x27;s Hardware reports that per-area memory manufacturing cost can now exceed the price of silicon made on TSMC&\#x27;s N2 and N3 nodes.
 
-**「Impact」** Because the project is unconfirmed and years from any potential release, there is nothing for developers or users to act on now; the report mainly signals that Apple is considering a subscription-style, screen-free wearable category currently dominated by Whoop rather than extending the Apple Watch line.
+**「Impact」** Memory manufacturers such as HBM suppliers gain increased leverage and strategic importance in the AI chip supply chain, which could affect pricing negotiations and capacity allocation for AI accelerator buyers.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://www.androidheadlines.com/2026/09/apple-prototyping-screenless-fitness-band-whoop-fitbit.html">Apple Explores Screenless Fitness Band to Rival Whoop</a></li>
+<li><a href="https://www.tomshardware.com/pc-components/dram/dram-is-now-more-expensive-than-compute-chips-on-per-area-basis-ai-demand-drives-memory-die-value-past-leading-edge-silicon">Memory chips are now more expensive than compute chips on a ...</a></li>
+<li><a href="https://www.tomshardware.com/tech-industry/semiconductors/micron-says-the-silicon-gap-between-hbm-and-ddr5-is-widening-with-every-generation">Hot Chips 2026: Micron warns HBM wafer penalty is widening ...</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#apple`, `#wearables`, `#fitness-tracker`, `#industry-news`, `#hardware`
+**Tags**: `#HBM`, `#semiconductors`, `#AI infrastructure`, `#DRAM`, `#chip industry`
 
 ---
 
 <a id="item-tech-news-5"></a>
-### [ShinyHunters Claims FBI Breach, Employee and Applicant Data](https://www.404media.co/we-hacked-the-fbi-hackers-say-they-have-data-on-all-fbi-employees/) ⭐️ 6.0/10
+### [JCOM internet outage hits most of Japan](https://news.web.nhk/newsweb/na/nd-20260923de52004) ⭐️ 5.0/10
 
-The hacking group ShinyHunters claims to have breached multiple FBI-related services and stolen data on all FBI employees and job applicants, according to 404 Media. The group provided a sample of roughly 5,000 purported FBI employee records that may include names, home addresses, phone numbers, and information about family members such as spouses. The FBI has not confirmed the claim, and no technical details about the alleged intrusion have been disclosed, so the breach remains an unverified vendor-of-record claim rather than an established incident.
+Japanese cable operator JCOM reported that its internet connection service went down starting around 9 AM on the 23rd, leaving subscribers unable to connect. According to NHK&\#x27;s brief report, the outage affects most of the country, excluding Hokkaido and the Kyushu/Okinawa regions. The report provides no information on the cause, the number of affected users, or an estimated restoration time.
 
-telegram · zaihuapd · Sep 23, 05:00
+rss · はてなブックマーク \(テクノロジー\) · Sep 23, 07:20
 
-**「Background」** ShinyHunters is a hacking group known for claiming large-scale data breaches and publicizing stolen data samples to support its claims. In this case, the group says it compromised multiple FBI-related services, but the FBI has not confirmed any intrusion, so the claim rests solely on the attackers&\#x27; statements and a sample of roughly 5,000 records reviewed by 404 Media.
+**「Background」** JCOM is one of Japan&\#x27;s largest cable television operators and provides the J:COM NET internet service to subscribers nationwide. According to other Japanese reports on the same incident, the company had not disclosed the cause of the outage or an estimated recovery time, and its customer support lines were difficult to reach.
 
-**「Impact」** If the data is authentic, exposed addresses and family details could enable tracking, harassment, or threats against FBI personnel and their relatives, creating security and counterintelligence concerns for US law enforcement. Until the FBI confirms or refutes the claim, affected individuals and agencies cannot verify their exposure or take targeted protective action.
+**「Impact」** JCOM subscribers in the affected regions cannot use their internet service and should monitor JCOM&\#x27;s official announcements for restoration updates, as the report gives no timeline for recovery.
 
-**Tags**: `#cybersecurity`, `#data-breach`, `#FBI`, `#ShinyHunters`, `#privacy`
+<details><summary>References</summary>
+<ul>
+<li><a href="https://www.sankei.com/article/20260923-UMFHABPPAJK3DGTY5BIMUXBCGE/">Jcomネットで全国的に接続障害原因調査、復旧は未定 窓口問い合わせもつながりにくく - 産経ニュース</a></li>
+<li><a href="https://reaitimenews.com/entry/jcom-network-outage-2026-09-23">J:COMで9月23日朝から全国ネット障害、原因は非公表</a></li>
+
+</ul>
+</details>
+
+**Tags**: `#internet-outage`, `#ISP`, `#JCOM`, `#network-infrastructure`, `#japan`
 
 ---
 
 <a id="item-tech-news-6"></a>
-### [Microsoft cuts 268 more Xbox jobs, moves next Halo to Activision](https://www.itmedia.co.jp/news/article/2609/23/2000001675/) ⭐️ 5.0/10
+### [Geta.Team: AI &\#x27;employees&\#x27; with dedicated email, phone numbers, and self-hosting](https://gigazine.net/news/20260923-geta-team/) ⭐️ 5.0/10
 
-Microsoft&\#x27;s Xbox division announced on September 22 that it is cutting 268 jobs across Halo Studios, other first-party studios, and Xbox Game Studios management and central functions, according to an employee memo from EVP and Chief Content Officer Matt Booty. The next Halo game will be developed by a newly created dedicated team at Activision, separate from Call of Duty development, while Halo Studios shrinks to a small team supporting released titles and the community. The restructuring also consolidates studios: World&\#x27;s Edge and Rare move under Activision, Obsidian joins Bethesda while continuing current projects including a new Fallout collaboration with Bethesda Game Studios, King absorbs Microsoft Casual Games, and Playground Games and Turn 10 merge into one studio focused on Forza and Fable. Booty said roughly three-quarters of the previously announced reorganization is now complete.
+Gigazine published a hands-on review of Geta.Team, a service that lets users create AI agents presented as &\#x27;employees&\#x27; with names, job roles, generated profile images, and—in paid tiers—dedicated email addresses and real phone numbers via Twilio integration. The agents have persistent memory across sessions, support scheduled autonomous tasks, connect to Slack, Teams, WhatsApp, Telegram, Discord, Gmail, and Outlook, and can operate a logged-in browser via a Chrome extension or an entire PC via a Windows desktop app. In the review, an agent successfully gathered AI news and drafted social media posts while respecting an instruction to wait for human approval before posting. A free tier offers one AI employee on shared servers with 100 credits per day and no credit card or API key required, while dedicated email, phone, the desktop app, and multiple employees are paid-only; self-hosting is offered as an enterprise deployment to a customer&\#x27;s cloud or data center rather than a public Docker Compose setup.
 
-rss · ITmedia NEWS · Sep 23, 00:55
+rss · はてなブックマーク \(テクノロジー\) · Sep 23, 09:22
 
-**「Background」** This cut is part of a broader Xbox reorganization announced in July, under which Microsoft said it would eliminate roughly 3,200 positions across the division through fiscal year 2027, starting with about 1,600. Asha Sharma, who became Xbox CEO in February as Phil Spencer&\#x27;s successor, described the business as &quot;not healthy&quot; at the time and called the effort the largest organizational restructuring in Xbox&\#x27;s history. Microsoft says it has now completed roughly three-quarters of the announced reorganization, including the previously announced spin-offs of studios such as Compulsion Games, Double Fine Productions, and Undead Labs.
+**「Background」** Geta.Team is part of a recent wave of services that package large language models as persistent &\#x27;AI employees&\#x27; or agents, combining long-term memory, scheduled autonomous tasks, and integrations with email, chat platforms, and browsers to handle routine work. Similar offerings covered by the same outlet include OpenAI&\#x27;s Frontier platform for building enterprise AI workers and Microsoft&\#x27;s always-on agent Scout, reflecting a broader industry push to frame AI agents as delegated staff rather than one-off chatbots.
 
-**「Impact」** Ninja Theory faces a proposed closure after two agreed acquisition deals fell through, with Xbox beginning employee consultations while exploring alternatives, and talks over Arkane expected to continue through year-end. Meanwhile, Compulsion Games, Double Fine Productions, and Undead Labs have completed their spin-offs with their IP and operating funds intact, and State of Decay 3 will still launch day-one on Game Pass under a new publisher.
+**「Impact」** For users evaluating the service, the free tier is enough to test core agent behavior—memory, scheduled tasks, skills, and web browsing—without payment details, but the features that make agents act like standalone staff \(their own email address and phone number, plus full PC control\) require a paid plan, and organizations wanting on-premises deployment must go through the enterprise channel rather than self-installing from a published compose file.
 
-**Tags**: `#Microsoft`, `#Xbox`, `#gaming industry`, `#layoffs`, `#studio restructuring`
+**Tags**: `#AI agents`, `#automation`, `#product review`, `#self-hosting`, `#SaaS`
+
+---
+
+<a id="item-tech-news-7"></a>
+### [ByteDance&\#x27;s Doubao Reportedly Halves General Conversation Team](https://mp.weixin.qq.com/s/a50_mhFCB9n8WdmRFVx_lA) ⭐️ 5.0/10
+
+ByteDance&\#x27;s AI app Doubao, which reports over 200 million daily active users, is shrinking its conversational AI teams, according to a LatePost report relayed via Telegram. The general Session team of roughly 50 people is expected to be cut by about half, with some staff transferred to Doubao&\#x27;s commercialization unit or Feishu and the rest laid off; the post-training team for conversation products is also being reduced. The restructuring is tied to commercialization bottlenecks: after paid-tier plans surfaced in April, users complained that Doubao&\#x27;s answers had become &quot;dumb and sycophantic,&quot; prompting the company to accept a short-term retention drop of under 1% to fix the experience. These are reported figures from a single secondhand source and have not been independently confirmed.
+
+telegram · zaihuapd · Sep 23, 06:18
+
+**「Background」** Doubao is ByteDance&\#x27;s flagship consumer AI chatbot app, which the source describes as having surpassed 200 million daily active users, making it one of China&\#x27;s largest AI applications. In April of this year, reports of a paid tier triggered user complaints that Doubao&\#x27;s answers had become &quot;dumb and sycophantic,&quot; prompting the company to accept a short-term retention dip of under 1% to correct the experience. The reported team cuts, originally covered by LatePost, come as conversational AI products face pressure to find viable commercialization paths.
+
+**「Impact」** For affected employees, the report indicates transfers to commercialization or Feishu teams for some and layoffs for the rest, while the post-training cuts suggest ByteDance is deprioritizing general-purpose chat quality work in favor of monetization. If accurate, the episode illustrates a concrete trade-off for large-scale chatbot operators: tuning models for engagement or paid conversion can degrade perceived answer quality enough to force a corrective retreat.
+
+**Tags**: `#AI industry`, `#ByteDance`, `#Doubao`, `#layoffs`, `#chatbot commercialization`
+
+---
+
+<a id="item-tech-news-8"></a>
+### [Musk Praises Chinese AI Models, Predicts Compute Gap Closure in 2-3 Years](https://weibo.com/2258727970/RjqEdvjne) ⭐️ 5.0/10
+
+In an interview with CCTV Finance, Tesla CEO Elon Musk said Chinese AI large models are &quot;overall very impressive,&quot; claiming their performance per unit of compute is nearly world-leading. He predicted China would solve its compute constraints faster than most expect, estimating that within roughly two to three years the country could close its compute gap through lithography and chip manufacturing advances. These are Musk&\#x27;s stated opinions in a media interview, not measured benchmarks or announced technical milestones, and the report circulating via Telegram and Weibo provides no additional technical detail.
+
+telegram · zaihuapd · Sep 23, 07:20
+
+**「Background」** Musk&\#x27;s remarks refer to China&\#x27;s well-documented AI compute constraint: US export controls have restricted Chinese firms&\#x27; access to advanced GPUs and the EUV lithography equipment needed to manufacture cutting-edge chips domestically, forcing Chinese AI labs to emphasize compute efficiency. His comments were made in a CCTV Finance interview and relayed by multiple Chinese outlets, which report the same quotes without additional technical detail or independent verification.
+
+**「Impact」** The prediction is a high-profile endorsement of China&\#x27;s AI efficiency narrative, but it carries no actionable detail: no specific models, chips, or fabrication processes were named, so readers should treat the two-to-three-year timeline as one executive&\#x27;s estimate rather than a verified forecast.
+
+<details><summary>References</summary>
+<ul>
+<li><a href="https://m.21jingji.com/article/20260923/herald/557254d0058ed7533d516224b161aeb7.html">马斯克惊叹中国AI大模型“单位算力产出性能几乎是全球顶尖水平”，预计两到三年内就能靠光刻技术与芯片制造补齐算力缺口 - 21财经</a></li>
+<li><a href="https://tech.ifeng.com/c/8wbYxCAilw3">马斯克：中国AI大模型单位算力产出近全球顶尖，2-3年补齐算力缺口_凤凰网</a></li>
+
+</ul>
+</details>
+
+**Tags**: `#AI`, `#China tech`, `#semiconductors`, `#compute`, `#industry news`
+
+---
+
+## Technology Blog
+
+<a id="item-tech-blog-1"></a>
+### [Four Copyright Risks of Generative AI, Grounded in Primary Sources](https://qiita.com/songchong/items/7306e0b1a9207e08d86e?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items) ⭐️ 8.0/10
+
+rss · Qiita \(人気記事\) · Sep 23, 07:45
+
+**「Background」** A common sales pitch claims generative AI output is a novel creation of probabilistically arranged words, so it cannot infringe copyright. The author tests this claim against three primary sources: two LLM memorization papers, Japan&\#x27;s Agency for Cultural Affairs 2024 guidance on AI and copyright, and OpenAI&\#x27;s enterprise Services Agreement.
+
+**「Solution」** The author identifies four risks. First, memorization: Carlini et al. \(USENIX Security 2021\) extracted hundreds of verbatim training strings from GPT-2—including code and strings appearing in only one training document—and Nasr et al. \(2023\) showed alignment techniques like RLHF do not eliminate memorization, though both studies used deliberate extraction attacks rather than normal use. Second, user liability: the Cultural Affairs guidance \(non-binding\) separates training from output use; training is generally permitted under Article 30-4 unless the purpose includes reproducing expression \(e.g., RAG built to regurgitate source text\), and if output resembles a work the model trained on, reliance is &\#x27;normally presumed&\#x27; even if the user never knew the work. Third, weak ownership: AI cannot be an author, and OpenAI&\#x27;s contract assigns rights only &\#x27;if any,&\#x27; noting outputs may not be unique. Fourth, indemnification limits: OpenAI&\#x27;s §13.1 lists four exclusions \(combinations, modifications, customer content—which includes inputs and outputs—and customer apps\), while §12.2 disclaims any non-infringement warranty. Countermeasures follow: check outputs against existing works before use, avoid training/RAG designed to reproduce others&\#x27; expression, document human creative contributions, and have legal counsel map contract exclusions to your integration.
+
+**「Takeaway」** The author concludes that &\#x27;probabilistic generation&\#x27; does not guarantee non-infringement: memorized text can surface verbatim, users can bear liability, outputs may be unprotectable, and vendor indemnification is narrower than marketed. Safe adoption requires verifying outputs, preserving human authorship records, and reading contract exclusions against your own architecture.
+
+**Tags**: `#generative-ai`, `#copyright-law`, `#llm-memorization`, `#vendor-contracts`, `#risk-management`
 
 ---
 
 ## Financial News
 
 <a id="item-finance-news-1"></a>
-### [China Reportedly Tells Banks Not to Classify Vanke&\#x27;s Overdue Loans as Bad Debt](https://www.reuters.com/world/asia-pacific/china-asks-banks-keep-vanke-loans-off-bad-debt-books-sources-say-2026-09-22/) ⭐️ 8.0/10
+### [China&\#x27;s Self-Sufficiency Shifts Trade Calculus Ahead of Trump-Xi Summit](https://www.cnbc.com/2026/09/23/trump-xi-meeting-why-chinas-self-sufficiency-changes-the-calculus.html) ⭐️ 7.0/10
 
-Chinese financial regulators have told some large banks not to classify overdue loans to property developer Vanke as non-performing, to extend repayment deadlines, and to suspend interest collection, Reuters reported citing unnamed sources, in an effort to prevent a default by the company, which posted a record 88.6 billion yuan loss in 2025 and a 14.95 billion yuan net loss in the first half of 2026.
+Ahead of a Trump-Xi summit this week, CNBC reports that China&\#x27;s push for self-sufficiency and the world&\#x27;s continued reliance on Chinese goods have blunted U.S. tariff leverage, with businesses hoping at best for an extension of last fall&\#x27;s trade truce. Despite tariffs, the U.S. trade deficit with China has risen again this year on surging demand for AI-related parts, and China reached 40% of global container exports this summer—a milestone the European Chamber of Commerce in China had not expected until 2030.
 
-telegram · zaihuapd · Sep 23, 03:12
+rss · CNBC Finance · Sep 23, 09:13
 
-**「Background」** Vanke, one of China&\#x27;s largest state-backed developers, has been in deepening distress: it narrowly avoided default in January 2026 via last-minute bond extensions, later missed a quarterly interest payment and agreed with lenders to defer interest until September, and posted a record 88.6 billion yuan loss for 2025 followed by a 14.95 billion yuan net loss in the first half of 2026.
+**「Background」** China&\#x27;s property downturn, which began in 2022, weakened domestic demand and pushed its companies to expand exports aggressively, while U.S. tariffs imposed since last year have failed to significantly shrink the bilateral trade deficit.
 
-**「Impact」** If confirmed, the directive would shield banks&\#x27; reported asset quality from Vanke&\#x27;s troubles while shifting the developer&\#x27;s debt risk onto lenders&\#x27; balance sheets, though the claims rest on anonymous sources and have not been officially confirmed.
+**「Impact」** China&\#x27;s domestic weakness is spilling abroad: the American Chamber of Commerce in Shanghai says three-quarters of surveyed members now see Chinese rivals as more advanced, and the EU—which runs the largest trade deficit with China—is stepping up scrutiny of Chinese exports, with its trade commissioner expected in Beijing next month.
 
-<details><summary>References</summary>
-<ul>
-<li><a href="https://www.caixinglobal.com/2026-01-29/in-depth-vankes-debt-spiral-reveals-limits-of-chinas-real-estate-backstop-102409072.html">In Depth: Vanke ’s Debt Spiral Reveals Limits of China ’s Real Estate...</a></li>
-<li><a href="https://www.kaohooninternational.com/markets/573851">China Vanke and Banks Agree to Defer Loan Interest Payments to...</a></li>
-<li><a href="https://k.sina.cn/article_5953189932_162d6782c06704weim.html">半年报 | 万科上半年亏了149.5亿，平均每天亏8000万|债务|归母净利润|...</a></li>
-
-</ul>
-</details>
-
-**Tags**: `#房地产风险`, `#万科`, `#银行监管`, `#不良贷款`, `#中国金融政策`
-
----
-
-<a id="item-finance-news-2"></a>
-### [CFTC Warns Prediction-Market &\#x27;Mentions&\#x27; Contracts Carry Higher Manipulation Risk](https://www.cnbc.com/2026/09/22/cftc-prediction-markets-mentions-contracts-have-manipulation-risk.html) ⭐️ 7.0/10
-
-The CFTC told regulated exchanges on Tuesday that prediction-market &\#x27;mentions&\#x27; contracts — bets on specific words used in a speech, earnings call, or broadcast — face heightened manipulation risk because settlement depends on one person&\#x27;s conduct that may not be independently verifiable. The advisory creates no new obligations but lists four factors exchanges should weigh before listing such contracts.
-
-rss · CNBC Finance · Sep 23, 00:58
-
-**「Background」** The guidance follows an internal CFTC review that prompted Kalshi, one of the few U.S.-regulated platforms offering these markets, to pull its sports-related mention contracts, and an August settlement in which a teleprompter operator for President Trump paid a $172,539 fine for insider trading on Kalshi mention markets tied to the president&\#x27;s statements.
-
-**「Impact」** Regulated exchanges such as Kalshi may need to redesign, delay, or drop mention contracts to address the CFTC&\#x27;s concerns, while rival Polymarket is unaffected because it offers these markets only on its international, non-CFTC-regulated exchange.
-
-**Tags**: `#CFTC`, `#prediction markets`, `#market regulation`, `#manipulation risk`, `#Kalshi`
-
----
-
-<a id="item-finance-news-3"></a>
-### [Major U.S. CEOs to attend Trump-Xi dinner during Xi&\#x27;s U.S. visit](https://www.cnbc.com/2026/09/22/heres-who-we-know-is-going-to-the-trump-xi-dinner-so-far.html) ⭐️ 6.0/10
-
-CEOs including Microsoft&\#x27;s Satya Nadella, Nvidia&\#x27;s Jensen Huang, Tesla&\#x27;s Elon Musk, Apple&\#x27;s Tim Cook, and other tech and finance leaders are expected to attend a Thursday dinner in Washington during Xi Jinping&\#x27;s confirmed Wednesday-to-Friday U.S. visit, according to CNBC sources, while no Chinese executives have been confirmed to join.
-
-rss · CNBC Finance · Sep 22, 23:43
-
-**「Background」** The dinner comes amid years of escalating U.S.-China tensions in which both governments have placed each other&\#x27;s companies on blacklists restricting business activity, and Reuters reported Chinese firms under consideration for the delegation include BYD, Xiaomi, CATL, and Bank of China.
-
-**Tags**: `#US-China relations`, `#trade policy`, `#corporate executives`, `#diplomacy`, `#technology sector`
+**Tags**: `#US-China trade`, `#Trump-Xi summit`, `#tariffs`, `#China economy`, `#AI exports`
 
 ---
