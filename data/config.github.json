@@ -7,7 +7,7 @@
     "temperature": 0.3,
     "max_tokens": 4096,
     "throttle_sec": 0,
-    "analysis_concurrency": 1,
+    "analysis_concurrency": 3,
     "enrichment_concurrency": 1
   },
 "processing": {
@@ -147,7 +147,7 @@
       {
         "name": "TechCrunch Japan",
         "url": "https://jp.techcrunch.com/feed/",
-        "enabled": true,
+        "enabled": false,
         "category": "japan-tech",
         "profile": "tech-news",
         "content_extractor": "trafilatura"
@@ -162,7 +162,7 @@
       }
     ],
     "reddit": {
-      "enabled": true,
+      "enabled": false,
       "subreddits": [
         {
           "subreddit": "MachineLearning",
