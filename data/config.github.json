@@ -111,6 +111,54 @@
         "enabled": false,
         "category": "linux",
         "profile": "tech-news"
+      },
+      {
+        "name": "はてなブックマーク (テクノロジー)",
+        "url": "https://b.hatena.ne.jp/hotentry/it.rss",
+        "enabled": true,
+        "category": "japan-tech",
+        "profile": "tech-news",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Zenn",
+        "url": "https://zenn.dev/feed",
+        "enabled": true,
+        "category": "japan-tech",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Qiita (人気記事)",
+        "url": "https://qiita.com/popular-items/feed",
+        "enabled": true,
+        "category": "japan-tech",
+        "profile": "tech-blog",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Publickey",
+        "url": "https://www.publickey1.jp/atom.xml",
+        "enabled": true,
+        "category": "japan-tech",
+        "profile": "tech-news",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "TechCrunch Japan",
+        "url": "https://jp.techcrunch.com/feed/",
+        "enabled": true,
+        "category": "japan-tech",
+        "profile": "tech-news",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "ITmedia NEWS",
+        "url": "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml",
+        "enabled": true,
+        "category": "japan-tech",
+        "profile": "tech-news",
+        "content_extractor": "trafilatura"
       }
     ],
     "reddit": {
