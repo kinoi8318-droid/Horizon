@@ -36,7 +36,7 @@ jobs:
       - name: Run Horizon
         env:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
-        run: uv run horizon --hours 12
+        run: uv run horizon --hours 6
       - name: Set current date as environment variable
         run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Deploy to GitHub Pages
