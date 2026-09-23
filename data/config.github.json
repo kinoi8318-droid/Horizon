@@ -10,12 +10,12 @@
     "analysis_concurrency": 1,
     "enrichment_concurrency": 1
   },
-  "processing": {
+"processing": {
     "profiles_dir": "profiles",
     "default_profile": "tech-news",
     "profile_settings": {
       "tech-news": {
-        "threshold": 7.0,
+        "threshold": 5.0,
         "topic_dedup": true
       },
       "tech-blog": {
@@ -23,11 +23,25 @@
         "topic_dedup": false
       },
       "finance-news": {
-        "threshold": 7.0,
+        "threshold": 6.0,
         "topic_dedup": true
       }
     }
   },
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   "display": {
     "icon_style": "emoji"
   },
